@@ -1,0 +1,62 @@
+---
+// Ruta: src/pages/rutas/index.astro
+import { getCollection } from 'astro:content';
+import { Image } from 'astro:assets';
+import Layout from '../../layouts/Layout.astro';
+
+const rutas = await getCollection('rutas');
+---
+
+<Layout title="Catálogo de Rutas">
+  <div class="w-full">
+    <header class="text-center mb-16 mt-8">
+      <h1 class="text-4xl font-bold text-emerald-400 tracking-tight">Catálogo de Rutas</h1>
+      <p class="mt-4 text-slate-300 max-w-2xl mx-auto">
+        Explora las mejores rutas de ciclismo documentadas con precisión técnica.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+      {rutas.map((ruta) => (
+        <article class="bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-700 hover:border-emerald-500/50 transition-colors flex flex-col">
+          <a href={`/rutas/${ruta.id}`} class="block aspect-video overflow-hidden relative">
+            <Image 
+              src={ruta.data.cover} 
+              alt={ruta.data.title} 
+              class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+            />
+            <!-- Etiqueta flotante de dificultad -->
+            <div class="absolute top-3 right-3 bg-slate-900/90 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full backdrop-blur-sm border border-slate-700">
+              {ruta.data.difficulty}
+            </div>
+          </a>
+          <div class="p-6 flex flex-col flex-grow">
+            <!-- Mini panel técnico en la tarjeta -->
+            <div class="flex items-center gap-4 mb-3 border-b border-slate-700/50 pb-3">
+              <div class="flex flex-col">
+                <span class="text-xs text-slate-400">Distancia</span>
+                <span class="text-sm font-bold text-slate-200">{ruta.data.distance} km</span>
+              </div>
+              <div class="flex flex-col border-l border-slate-700/50 pl-4">
+                <span class="text-xs text-slate-400">Desnivel</span>
+                <span class="text-sm font-bold text-slate-200">{ruta.data.elevation} m+</span>
+              </div>
+            </div>
+            <a href={`/rutas/${ruta.id}`} class="group">
+              <h2 class="text-xl font-bold text-slate-100 group-hover:text-emerald-400 transition-colors mb-2">
+                {ruta.data.title}
+              </h2>
+            </a>
+            <p class="text-sm text-slate-400 mb-4 flex-grow line-clamp-2">
+              {ruta.data.description}
+            </p>
+            <a href={`/rutas/${ruta.id}`} class="text-sm font-medium text-emerald-400 hover:text-emerald-300 mt-auto flex items-center gap-1">
+              Ver detalles del trazado 
+              <span aria-hidden="true">&rarr;</span>
+            </a>
+          </div>
+        </article>
+      ))}
+    </div>
+  </div>
+</Layout>

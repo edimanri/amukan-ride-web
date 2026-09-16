@@ -1,0 +1,60 @@
+---
+// Ruta: src/pages/blog/[slug].astro
+import { getCollection, render } from 'astro:content';
+import { Image } from 'astro:assets'; // Importamos el componente de optimización gráfica
+import Layout from '../../layouts/Layout.astro';
+
+export async function getStaticPaths() {
+  const blogEntries = await getCollection('blog');
+  return blogEntries.map(entry => ({
+    params: { slug: entry.id },
+    props: { entry }, 
+  }));
+}
+
+const { entry } = Astro.props;
+const { Content } = await render(entry);
+---
+
+<Layout title={entry.data.title}>
+  <article class="max-w-3xl mx-auto py-10 px-4 w-full flex-grow">
+    <header class="mb-12 text-center">
+      <h1 class="text-4xl font-bold text-emerald-400 mb-4">{entry.data.title}</h1>
+      <p class="text-lg text-slate-300">{entry.data.description}</p>
+      <div class="mt-4 text-sm text-slate-500 mb-8">
+        Escrito por {entry.data.author} | {entry.data.pubDate.toISOString().split('T')[0]}
+      </div>
+      
+      <!-- Renderizamos la imagen de portada aquí -->
+      <Image 
+        src={entry.data.cover} 
+        alt={entry.data.title} 
+        class="w-full h-64 md:h-96 object-cover rounded-xl shadow-lg border border-slate-800"
+      />
+    </header>
+    
+    <div class="mdx-content text-slate-200 leading-relaxed">
+      <Content />
+    </div>
+  </article>
+</Layout>
+
+<style is:global>
+  @reference "../../styles/global.css";
+
+  .mdx-content h2 {
+    @apply text-2xl font-bold text-emerald-300 mt-10 mb-4;
+  }
+  .mdx-content p {
+    @apply mb-6;
+  }
+  .mdx-content strong {
+    @apply text-white font-semibold;
+  }
+  .mdx-content ul {
+    @apply list-disc list-inside mb-6 space-y-2;
+  }
+  .mdx-content li {
+    @apply text-slate-300;
+  }
+</style>

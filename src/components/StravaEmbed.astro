@@ -1,0 +1,25 @@
+---
+// Ruta: src/components/StravaEmbed.astro
+interface Props {
+  embedId: string;
+  mapHash: string;
+  token: string;
+}
+
+const { embedId, mapHash, token } = Astro.props;
+---
+
+<div class="w-full my-8 rounded-xl overflow-hidden shadow-lg border border-slate-700 bg-slate-800/50">
+  <!-- El contenedor inyecta las variables dinámicamente -->
+  <div 
+    class="strava-embed-placeholder" 
+    data-embed-type="route" 
+    data-embed-id={embedId} 
+    data-style="standard" 
+    data-map-hash={mapHash} 
+    data-from-embed="true" 
+    data-token={token}
+  ></div>
+  <!-- is:inline le dice al motor de Astro que ejecute este script inmediatamente en el navegador -->
+  <script is:inline src="https://strava-embeds.com/embed.js"></script>
+</div>
