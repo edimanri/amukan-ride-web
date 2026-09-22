@@ -1,0 +1,8 @@
+---
+import { Keystatic } from '../../../node_modules/@keystatic/astro/ui';
+import keystaticConfig from '../../../keystatic.config';
+
+export const prerender = false;
+---
+
+<Keystatic client:only="react" config={keystaticConfig} />

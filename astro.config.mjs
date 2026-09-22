@@ -1,17 +1,15 @@
-// @ts-check
 import { defineConfig } from 'astro/config';
-
-import tailwindcss from '@tailwindcss/vite';
-
-import mdx from '@astrojs/mdx';
-
+import tailwind from '@astrojs/tailwind';
 import react from '@astrojs/react';
+import keystatic from '@keystatic/astro';
+import vercel from '@astrojs/vercel';
 
-// https://astro.build/config
 export default defineConfig({
-  vite: {
-    plugins: [tailwindcss()]
-  },
-
-  integrations: [mdx(), react()]
+  output: 'hybrid',
+  adapter: vercel(),
+  integrations: [
+    tailwind(),
+    react(),
+    keystatic()
+  ],
 });
