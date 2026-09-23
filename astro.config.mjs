@@ -5,7 +5,7 @@ import keystatic from '@keystatic/astro';
 import vercel from '@astrojs/vercel';
 
 export default defineConfig({
-  output: 'hybrid',
+  output: 'static', // <- Corrección requerida por Astro
   adapter: vercel(),
   integrations: [
     tailwind(),
