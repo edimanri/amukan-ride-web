@@ -29,7 +29,7 @@ export default config({
         coverImage: fields.image({
           label: 'Imagen Principal',
           directory: 'src/assets/blog',
-          publicPath: '../../assets/blog/'
+          publicPath: '../../../assets/blog/'
         }),
         
         content: fields.mdx({
@@ -62,7 +62,7 @@ export default config({
         coverImage: fields.image({
           label: 'Imagen de Portada',
           directory: 'src/assets/rutas',
-          publicPath: '../../assets/rutas/'
+          publicPath: '../../../assets/rutas/'
         }),
         
         stravaLink: fields.url({
