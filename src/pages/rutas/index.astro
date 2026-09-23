@@ -1,62 +1,64 @@
 ---
-// Ruta: src/pages/rutas/index.astro
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
 
 const rutas = await getCollection('rutas');
 ---
 
-<Layout title="Catálogo de Rutas">
-  <div class="w-full">
-    <header class="text-center mb-16 mt-8">
-      <h1 class="text-4xl font-bold text-emerald-400 tracking-tight">Catálogo de Rutas</h1>
-      <p class="mt-4 text-slate-300 max-w-2xl mx-auto">
-        Explora las mejores rutas de ciclismo documentadas con precisión técnica.
-      </p>
-    </header>
-
+<Layout title="Catálogo de Rutas - Amukan Ride">
+  <main class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold text-center mb-12">Catálogo de Rutas</h1>
+    
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {rutas.map((ruta) => (
-        <article class="bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-700 hover:border-emerald-500/50 transition-colors flex flex-col">
-          <a href={`/rutas/${ruta.id}`} class="block aspect-video overflow-hidden relative">
-            <Image 
-              src={ruta.data.cover} 
-              alt={ruta.data.title} 
-              class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
-            />
-            <!-- Etiqueta flotante de dificultad -->
-            <div class="absolute top-3 right-3 bg-slate-900/90 text-emerald-400 text-xs font-bold px-3 py-1 rounded-full backdrop-blur-sm border border-slate-700">
-              {ruta.data.difficulty}
-            </div>
-          </a>
-          <div class="p-6 flex flex-col flex-grow">
-            <!-- Mini panel técnico en la tarjeta -->
-            <div class="flex items-center gap-4 mb-3 border-b border-slate-700/50 pb-3">
-              <div class="flex flex-col">
-                <span class="text-xs text-slate-400">Distancia</span>
-                <span class="text-sm font-bold text-slate-200">{ruta.data.distance} km</span>
-              </div>
-              <div class="flex flex-col border-l border-slate-700/50 pl-4">
-                <span class="text-xs text-slate-400">Desnivel</span>
-                <span class="text-sm font-bold text-slate-200">{ruta.data.elevation} m+</span>
-              </div>
-            </div>
-            <a href={`/rutas/${ruta.id}`} class="group">
-              <h2 class="text-xl font-bold text-slate-100 group-hover:text-emerald-400 transition-colors mb-2">
-                {ruta.data.title}
-              </h2>
+      {rutas.map((ruta) => {
+        // Limpiamos el ID para compatibilidad con Astro v5
+        const cleanSlug = ruta.id.replace(/\/?index(\.mdx?)?$/, '').replace(/\.mdx?$/, '');
+        
+        return (
+          <article class="bg-gray-900 rounded-lg overflow-hidden shadow-lg border border-gray-800 hover:border-gray-700 transition-colors">
+            <a href={`/rutas/${cleanSlug}`} class="block overflow-hidden h-48">
+              {/* Blindaje condicional para la imagen */}
+              {ruta.data.coverImage ? (
+                <Image 
+                  src={ruta.data.coverImage} 
+                  alt={ruta.data.title}
+                  width={600}
+                  height={400}
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              ) : (
+                <div class="w-full h-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
+                  <span class="text-gray-500 text-sm">Sin imagen de portada</span>
+                </div>
+              )}
             </a>
-            <p class="text-sm text-slate-400 mb-4 flex-grow line-clamp-2">
-              {ruta.data.description}
-            </p>
-            <a href={`/rutas/${ruta.id}`} class="text-sm font-medium text-emerald-400 hover:text-emerald-300 mt-auto flex items-center gap-1">
-              Ver detalles del trazado 
-              <span aria-hidden="true">&rarr;</span>
-            </a>
-          </div>
-        </article>
-      ))}
+            
+            <div class="p-6">
+              <a href={`/rutas/${cleanSlug}`}>
+                <h2 class="text-xl font-bold mb-2 hover:text-blue-400 transition-colors">
+                  {ruta.data.title}
+                </h2>
+              </a>
+              {ruta.data.description && (
+                <p class="text-gray-400 text-sm mb-4 line-clamp-3">
+                  {ruta.data.description}
+                </p>
+              )}
+              
+              {/* Etiquetas de datos adicionales */}
+              <div class="flex flex-wrap gap-2 text-xs font-medium mt-4">
+                {ruta.data.distance && (
+                  <span class="bg-gray-800 px-2 py-1 rounded text-gray-300">↔ {ruta.data.distance} km</span>
+                )}
+                {ruta.data.difficulty && (
+                  <span class="bg-blue-900/50 text-blue-200 px-2 py-1 rounded">{ruta.data.difficulty}</span>
+                )}
+              </div>
+            </div>
+          </article>
+        );
+      })}
     </div>
-  </div>
+  </main>
 </Layout>
