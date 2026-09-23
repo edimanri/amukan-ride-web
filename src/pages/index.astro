@@ -11,21 +11,24 @@ const allRutas = await getCollection('rutas');
 const allPosts = await getCollection('blog');
 
 const latestRutas = allRutas.slice(0, 3);
-const latestPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf()).slice(0, 3);
+// Blindaje de fecha: solo ordena si la fecha existe, sino lo ignora de forma segura
+const latestPosts = allPosts.sort((a, b) => {
+  const dateA = a.data.pubDate ? a.data.pubDate.valueOf() : 0;
+  const dateB = b.data.pubDate ? b.data.pubDate.valueOf() : 0;
+  return dateB - dateA;
+}).slice(0, 3);
 ---
 
 <Layout title="Inicio">
   <!-- SECCIÓN 1: HERO (Portada con Banner Integrado) -->
   <section class="relative w-full h-[60vh] md:h-[80vh] flex items-center justify-center overflow-hidden rounded-3xl mt-4 mb-16 border border-slate-800">
     
-    <!-- Imagen de fondo optimizada por Astro -->
     <Image 
       src={bannerEdi} 
       alt="Banner Edi Urban Ride" 
       class="absolute inset-0 w-full h-full object-cover z-0 opacity-30" 
     />
     
-    <!-- Gradiente superpuesto para garantizar la legibilidad del texto -->
     <div class="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-900/60 to-transparent z-0"></div>
     
     <div class="relative z-10 text-center px-4 max-w-4xl mx-auto flex flex-col items-center">
@@ -61,23 +64,36 @@ const latestPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pu
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {latestRutas.map((ruta) => (
-        <a href={`/rutas/${ruta.id}`} class="group block bg-slate-800/40 rounded-2xl overflow-hidden border border-slate-700 hover:border-emerald-500/50 transition-colors">
-          <div class="aspect-video overflow-hidden relative">
-            <Image src={ruta.data.cover} alt={ruta.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-            <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 to-transparent p-4">
-              <span class="text-emerald-400 text-xs font-bold bg-slate-900/80 px-2 py-1 rounded border border-slate-700">{ruta.data.difficulty}</span>
+      {latestRutas.map((ruta) => {
+        const cleanSlug = ruta.id.replace(/\/?index(\.mdx?)?$/, '').replace(/\.mdx?$/, '');
+        
+        return (
+          <a href={`/rutas/${cleanSlug}`} class="group block bg-slate-800/40 rounded-2xl overflow-hidden border border-slate-700 hover:border-emerald-500/50 transition-colors">
+            <div class="aspect-video overflow-hidden relative bg-gray-800">
+              {/* Blindaje condicional con coverImage */}
+              {ruta.data.coverImage ? (
+                <Image src={ruta.data.coverImage} alt={ruta.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center">
+                  <span class="text-gray-500 text-sm">Sin imagen</span>
+                </div>
+              )}
+              <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-slate-950 to-transparent p-4">
+                {ruta.data.difficulty && (
+                  <span class="text-emerald-400 text-xs font-bold bg-slate-900/80 px-2 py-1 rounded border border-slate-700">{ruta.data.difficulty}</span>
+                )}
+              </div>
             </div>
-          </div>
-          <div class="p-5">
-            <h3 class="text-lg font-bold text-slate-100 group-hover:text-emerald-400 transition-colors mb-2">{ruta.data.title}</h3>
-            <div class="flex gap-4 text-xs text-slate-400 font-medium">
-              <span>{ruta.data.distance} km</span>
-              <span>{ruta.data.elevation} m+</span>
+            <div class="p-5">
+              <h3 class="text-lg font-bold text-slate-100 group-hover:text-emerald-400 transition-colors mb-2">{ruta.data.title}</h3>
+              <div class="flex gap-4 text-xs text-slate-400 font-medium">
+                {ruta.data.distance && <span>{ruta.data.distance} km</span>}
+                {ruta.data.elevation && <span>{ruta.data.elevation} m+</span>}
+              </div>
             </div>
-          </div>
-        </a>
-      ))}
+          </a>
+        );
+      })}
     </div>
   </section>
 
@@ -92,18 +108,30 @@ const latestPosts = allPosts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pu
     </div>
 
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
-      {latestPosts.map((post) => (
-        <a href={`/blog/${post.id}`} class="group flex flex-col md:flex-row col-span-1 md:col-span-3 bg-slate-800/30 rounded-xl overflow-hidden border border-slate-700/50 hover:bg-slate-800/50 transition-colors">
-          <div class="md:w-1/4 aspect-video md:aspect-square overflow-hidden">
-            <Image src={post.data.cover} alt={post.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
-          </div>
-          <div class="p-6 md:w-3/4 flex flex-col justify-center">
-            <span class="text-emerald-400 text-xs font-bold mb-2">{post.data.tags?.[0]}</span>
-            <h3 class="text-xl font-bold text-slate-100 group-hover:text-emerald-400 transition-colors mb-2">{post.data.title}</h3>
-            <p class="text-sm text-slate-400 line-clamp-2">{post.data.description}</p>
-          </div>
-        </a>
-      ))}
+      {latestPosts.map((post) => {
+        const cleanSlug = post.id.replace(/\/?index(\.mdx?)?$/, '').replace(/\.mdx?$/, '');
+        
+        return (
+          <a href={`/blog/${cleanSlug}`} class="group flex flex-col md:flex-row col-span-1 md:col-span-3 bg-slate-800/30 rounded-xl overflow-hidden border border-slate-700/50 hover:bg-slate-800/50 transition-colors">
+            <div class="md:w-1/4 aspect-video md:aspect-square overflow-hidden bg-gray-800">
+              {/* Blindaje condicional con coverImage */}
+              {post.data.coverImage ? (
+                <Image src={post.data.coverImage} alt={post.data.title} class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" />
+              ) : (
+                <div class="w-full h-full flex items-center justify-center">
+                  <span class="text-gray-500 text-sm">Sin imagen</span>
+                </div>
+              )}
+            </div>
+            <div class="p-6 md:w-3/4 flex flex-col justify-center">
+              <h3 class="text-xl font-bold text-slate-100 group-hover:text-emerald-400 transition-colors mb-2">{post.data.title}</h3>
+              {post.data.description && (
+                <p class="text-sm text-slate-400 line-clamp-2">{post.data.description}</p>
+              )}
+            </div>
+          </a>
+        );
+      })}
     </div>
   </section>
 </Layout>
