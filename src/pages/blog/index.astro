@@ -1,38 +1,60 @@
 ---
-// Ruta: src/pages/blog/index.astro
 import { getCollection } from 'astro:content';
-import { Image } from 'astro:assets';
 import Layout from '../../layouts/Layout.astro';
+import { Image } from 'astro:assets';
 
+// Obtenemos todos los artículos de la colección 'blog'
 const posts = await getCollection('blog');
-const sortedPosts = posts.sort((a, b) => b.data.pubDate.valueOf() - a.data.pubDate.valueOf());
 ---
 
-<Layout title="Blog de Ciclismo">
-  <div class="w-full">
-    <header class="text-center mb-16 mt-8">
-      <h1 class="text-4xl font-bold text-emerald-400 tracking-tight">Bitácora Urbana</h1>
-      <p class="mt-4 text-slate-300 max-w-2xl mx-auto">Tips, mecánica y análisis técnico sobre ciclismo urbano y deportivo.</p>
-    </header>
+<Layout title="Blog - Amukan Ride">
+  <main class="max-w-6xl mx-auto px-4 py-12">
+    <h1 class="text-4xl font-bold text-center mb-12">Nuestro Blog</h1>
+    
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {sortedPosts.map((post) => (
-        <article class="bg-slate-800/50 rounded-2xl overflow-hidden border border-slate-700 hover:border-emerald-500/50 transition-colors flex flex-col">
-          <a href={`/blog/${post.id}`} class="block aspect-video overflow-hidden">
-            <Image src={post.data.cover} alt={post.data.title} class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
-          </a>
-          <div class="p-6 flex flex-col flex-grow">
-            <div class="flex items-center gap-2 mb-3">
-              <span class="text-xs font-medium text-emerald-400 bg-emerald-400/10 px-3 py-1 rounded-full">{post.data.tags?.[0] || 'Artículo'}</span>
-              <span class="text-xs text-slate-400">{post.data.pubDate.toISOString().split('T')[0]}</span>
-            </div>
-            <a href={`/blog/${post.id}`} class="group">
-              <h2 class="text-xl font-bold text-slate-100 group-hover:text-emerald-400 transition-colors mb-2">{post.data.title}</h2>
+      {posts.map((post) => {
+        // Limpiamos el ID para generar la URL correcta (compatible con Astro v5)
+        const cleanSlug = post.id.replace(/\/?index(\.mdx?)?$/, '').replace(/\.mdx?$/, '');
+        
+        return (
+          <article class="bg-gray-900 rounded-lg overflow-hidden shadow-lg border border-gray-800 hover:border-gray-700 transition-colors">
+            <a href={`/blog/${cleanSlug}`} class="block overflow-hidden h-48">
+              {/* Condición que protege la compilación si el artículo no tiene foto */}
+              {post.data.coverImage ? (
+                <Image 
+                  src={post.data.coverImage} 
+                  alt={post.data.title}
+                  width={600}
+                  height={400}
+                  class="w-full h-full object-cover hover:scale-105 transition-transform duration-300"
+                />
+              ) : (
+                <div class="w-full h-full bg-gray-800 flex items-center justify-center hover:bg-gray-700 transition-colors">
+                  <span class="text-gray-500 text-sm">Sin imagen de portada</span>
+                </div>
+              )}
             </a>
-            <p class="text-sm text-slate-400 mb-4 flex-grow line-clamp-3">{post.data.description}</p>
-            <a href={`/blog/${post.id}`} class="text-sm font-medium text-emerald-400 hover:text-emerald-300 mt-auto flex items-center gap-1">Leer artículo <span aria-hidden="true">&rarr;</span></a>
-          </div>
-        </article>
-      ))}
+            
+            <div class="p-6">
+              <a href={`/blog/${cleanSlug}`}>
+                <h2 class="text-xl font-bold mb-2 hover:text-blue-400 transition-colors">
+                  {post.data.title}
+                </h2>
+              </a>
+              {post.data.description && (
+                <p class="text-gray-400 text-sm mb-4 line-clamp-3">
+                  {post.data.description}
+                </p>
+              )}
+              {post.data.pubDate && (
+                <time class="text-xs text-gray-500">
+                  {new Date(post.data.pubDate).toLocaleDateString('es-CL')}
+                </time>
+              )}
+            </div>
+          </article>
+        );
+      })}
     </div>
-  </div>
+  </main>
 </Layout>
