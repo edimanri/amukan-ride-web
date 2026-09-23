@@ -3,17 +3,25 @@ import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 
-// Esta función le dice a Astro qué URLs debe generar basándose en los artículos de Keystatic
+// Modificamos esta función para limpiar el "/index" del nombre de la ruta
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
-  return blogEntries.map(entry => ({
-    params: { slug: entry.slug },
-    props: { entry },
-  }));
+  
+  return blogEntries.map(entry => {
+    // Si Astro detecta el archivo como "mi-post/index", le borramos el "/index"
+    const cleanSlug = entry.slug.replace(/\/index$/, '');
+    
+    // Imprimimos en la consola de Vercel las URLs que se están creando (para diagnóstico)
+    console.log(`Generando ruta: /blog/${cleanSlug}`);
+    
+    return {
+      params: { slug: cleanSlug },
+      props: { entry },
+    };
+  });
 }
 
 const { entry } = Astro.props;
-// Renderizamos el contenido MDX a HTML
 const { Content } = await entry.render();
 ---
 
