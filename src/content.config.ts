@@ -1,7 +1,9 @@
 import { z, defineCollection } from 'astro:content';
+import { glob } from 'astro/loaders'; // <-- Asegúrate de importar glob
 
 const blog = defineCollection({
-  type: 'content',
+  // Agregamos el loader para decirle a Astro dónde están los archivos
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }), 
   schema: ({ image }) => z.object({
     title: z.string(),
     description: z.string().optional(),
@@ -11,7 +13,8 @@ const blog = defineCollection({
 });
 
 const rutas = defineCollection({
-  type: 'content',
+  // Hacemos lo mismo para rutas
+  loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/rutas" }),
   schema: ({ image }) => z.object({
     title: z.string(),
     coverImage: image().optional(),
