@@ -1,3 +1,10 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+@layer base {
+  /* Establece el fondo Asfalto y el texto base Medium Contrast por defecto */
+  body {
+    @apply bg-gray-900 text-gray-300 antialiased;
+  }
+}

@@ -1,51 +1,63 @@
 ---
-// Ruta: src/layouts/Layout.astro
-import Navbar from '../components/Navbar.astro';
-import Footer from '../components/Footer.astro';
 import '../styles/global.css';
 
 interface Props {
   title: string;
-  description?: string;
-  image?: string;
 }
 
-const { 
-  title, 
-  description = "Amukan Ride - Rutas técnicas, mecánica aplicada e ingeniería para el ciclismo urbano y deportivo en Santiago.",
-  image = "/banner_youtube_Edi.jpg" // Usaremos tu banner como imagen por defecto al compartir enlaces
-} = Astro.props;
+const { title } = Astro.props;
 ---
 
 <!doctype html>
-<html lang="es" class="scroll-smooth">
+<html lang="es" class="bg-gray-900 scroll-smooth">
   <head>
     <meta charset="UTF-8" />
+    <meta name="description" content="Amukan Ride - Ingeniería, rutas y mecánica aplicada al ciclismo urbano y deportivo en Santiago." />
     <meta name="viewport" content="width=device-width" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="generator" content={Astro.generator} />
-    
-    <!-- Etiquetas SEO Básicas -->
-    <title>{title} | Amukan Ride</title>
-    <meta name="description" content={description} />
-    
-    <!-- Etiquetas Open Graph (Para previsualizaciones en WhatsApp, LinkedIn, Facebook) -->
-    <meta property="og:title" content={`${title} | Amukan Ride`} />
-    <meta property="og:description" content={description} />
-    <meta property="og:type" content="website" />
-    <meta property="og:image" content={image} />
-    
-    <!-- Etiquetas Twitter -->
-    <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={`${title} | Amukan Ride`} />
-    <meta name="twitter:description" content={description} />
-    <meta name="twitter:image" content={image} />
+    <title>{title}</title>
   </head>
-  <body class="bg-slate-900 text-slate-200 font-sans min-h-screen flex flex-col antialiased selection:bg-emerald-500/30 selection:text-emerald-200">
-    <Navbar />
-    <main class="flex-grow flex flex-col w-full">
+  <body class="bg-gray-900 text-gray-300 min-h-screen flex flex-col">
+    
+    <!-- BARRA DE NAVEGACIÓN (Superficie Hormigón) -->
+    <nav class="bg-gray-800 border-b border-gray-700 sticky top-0 z-50">
+      <div class="max-w-6xl mx-auto px-4">
+        <div class="flex justify-between h-16">
+          
+          <!-- LOGO -->
+          <div class="flex items-center">
+            <a href="/" class="text-2xl font-black tracking-tighter text-teal-500 hover:text-teal-400 transition-colors">
+              AMUKAN
+            </a>
+          </div>
+          
+          <!-- ENLACES DE ESCRITORIO -->
+          <div class="hidden md:flex items-center space-x-8">
+            <a href="/" class="text-sm font-medium text-gray-300 hover:text-teal-500 transition-colors">Inicio</a>
+            <a href="/rutas" class="text-sm font-medium text-gray-300 hover:text-teal-500 transition-colors">Rutas</a>
+            <a href="/blog" class="text-sm font-medium text-gray-300 hover:text-teal-500 transition-colors">Blog</a>
+            <a href="/academia" class="text-sm font-medium text-gray-300 hover:text-teal-500 transition-colors">Academia</a>
+            <a href="/corporativo" class="text-sm font-medium text-gray-300 hover:text-teal-500 transition-colors">Corporativo</a>
+          </div>
+
+        </div>
+      </div>
+    </nav>
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <main class="flex-grow">
       <slot />
     </main>
-    <Footer />
+
+    <!-- FOOTER -->
+    <footer class="bg-gray-800 border-t border-gray-700 py-8 mt-auto">
+      <div class="max-w-6xl mx-auto px-4 text-center">
+        <p class="text-sm text-gray-400">
+          &copy; {new Date().getFullYear()} Amukan Ride SpA. Edison Manríquez. Todos los derechos reservados.
+        </p>
+      </div>
+    </footer>
+
   </body>
 </html>

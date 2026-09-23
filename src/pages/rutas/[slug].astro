@@ -3,81 +3,61 @@ import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 
-// Generar las rutas dinámicas para la colección 'rutas'
 export async function getStaticPaths() {
   const rutasEntries = await getCollection('rutas');
-  
   return rutasEntries.map(entry => {
-    // Limpiamos el ID para generar la URL correcta (Astro v5)
     const cleanSlug = entry.id.replace(/\/?index(\.mdx?)?$/, '').replace(/\.mdx?$/, '');
-    
-    return {
-      params: { slug: cleanSlug },
-      props: { entry },
-    };
+    return { params: { slug: cleanSlug }, props: { entry } };
   });
 }
 
 const { entry } = Astro.props;
-// Usamos render() de Astro v5
 const { Content } = await render(entry);
 ---
 
 <Layout title={`${entry.data.title} - Amukan Ride`}>
   <article class="max-w-4xl mx-auto px-4 py-12">
     <header class="mb-10 text-center">
-      <h1 class="text-4xl md:text-5xl font-bold mb-4">{entry.data.title}</h1>
-      
+      <h1 class="text-4xl md:text-5xl font-bold text-gray-50 mb-4">{entry.data.title}</h1>
       {entry.data.description && (
-        <p class="text-xl text-gray-400 mb-6">{entry.data.description}</p>
+        <p class="text-xl text-gray-300 mb-6">{entry.data.description}</p>
       )}
-      
-      {/* Metadatos de la ruta (Distancia, Elevación, Dificultad) */}
       <div class="flex flex-wrap justify-center gap-4 text-sm font-medium mb-8">
         {entry.data.distance && (
-          <span class="bg-gray-800 px-3 py-1 rounded-full">↔ {entry.data.distance} km</span>
+          <span class="bg-gray-800 border border-gray-700 px-3 py-1 rounded-full text-gray-300">↔ {entry.data.distance} km</span>
         )}
         {entry.data.elevation && (
-          <span class="bg-gray-800 px-3 py-1 rounded-full">↑ {entry.data.elevation} msnm</span>
+          <span class="bg-gray-800 border border-gray-700 px-3 py-1 rounded-full text-gray-300">↑ {entry.data.elevation} msnm</span>
         )}
         {entry.data.difficulty && (
-          <span class="bg-blue-900 text-blue-100 px-3 py-1 rounded-full">{entry.data.difficulty}</span>
+          <span class="bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 px-3 py-1 rounded-full">{entry.data.difficulty}</span>
         )}
       </div>
 
-      {/* Renderizado condicional de la imagen de portada BLINDADO */}
       {entry.data.coverImage && (
-        <Image 
-          src={entry.data.coverImage} 
-          alt={entry.data.title}
-          width={1200}
-          height={600}
-          class="w-full h-64 md:h-96 object-cover rounded-xl shadow-lg border border-slate-800 mb-8"
-        />
+        <Image src={entry.data.coverImage} alt={entry.data.title} width={1200} height={600} class="w-full h-64 md:h-96 object-cover rounded-xl border border-gray-700 mb-8" />
       )}
       
-      {/* Botones de acción (Strava, Google Earth, GPX) */}
       <div class="flex flex-wrap justify-center gap-4 mb-10">
         {entry.data.stravaLink && (
-          <a href={entry.data.stravaLink} target="_blank" rel="noopener noreferrer" class="bg-orange-600 hover:bg-orange-700 text-white px-6 py-2 rounded-lg font-bold transition-colors">
+          <a href={entry.data.stravaLink} target="_blank" rel="noopener noreferrer" class="bg-teal-600 hover:bg-teal-700 text-gray-50 px-6 py-2 rounded-lg font-bold transition-colors">
             Ver en Strava
           </a>
         )}
         {entry.data.googleEarthLink && (
-          <a href={entry.data.googleEarthLink} target="_blank" rel="noopener noreferrer" class="bg-blue-600 hover:bg-blue-700 text-white px-6 py-2 rounded-lg font-bold transition-colors">
+          <a href={entry.data.googleEarthLink} target="_blank" rel="noopener noreferrer" class="bg-gray-800 hover:bg-gray-700 text-teal-500 border border-gray-700 px-6 py-2 rounded-lg font-bold transition-colors">
             Google Earth
           </a>
         )}
         {entry.data.gpxFile && (
-          <a href={entry.data.gpxFile} download class="bg-gray-700 hover:bg-gray-600 text-white px-6 py-2 rounded-lg font-bold transition-colors">
+          <a href={entry.data.gpxFile} download class="bg-gray-700 hover:bg-gray-600 text-gray-50 px-6 py-2 rounded-lg font-bold transition-colors">
             Descargar GPX
           </a>
         )}
       </div>
     </header>
 
-    {/* Contenido principal (texto enriquecido MDX) */}
-    <div class="prose prose-invert lg:prose-xl mx-auto">
+    <div class="prose prose-invert prose-gray lg:prose-xl mx-auto prose-headings:text-gray-50 prose-p:text-gray-300 prose-a:text-teal-500">
       <Content />
     </div>
   </article>
