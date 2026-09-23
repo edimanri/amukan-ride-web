@@ -1,17 +1,16 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
 import { Image } from 'astro:assets';
 
-// Modificamos esta función para limpiar el "/index" del nombre de la ruta
+// Modificamos esta función para usar la propiedad 'id' en lugar del antiguo 'slug'
 export async function getStaticPaths() {
   const blogEntries = await getCollection('blog');
   
   return blogEntries.map(entry => {
-    // Si Astro detecta el archivo como "mi-post/index", le borramos el "/index"
-    const cleanSlug = entry.slug.replace(/\/index$/, '');
+    // Usamos entry.id y limpiamos el "/index" o la extensión si existe
+    const cleanSlug = entry.id.replace(/\/?index(\.mdx?)?$/, '').replace(/\.mdx?$/, '');
     
-    // Imprimimos en la consola de Vercel las URLs que se están creando (para diagnóstico)
     console.log(`Generando ruta: /blog/${cleanSlug}`);
     
     return {
@@ -22,7 +21,8 @@ export async function getStaticPaths() {
 }
 
 const { entry } = Astro.props;
-const { Content } = await entry.render();
+// En Astro v5 usamos la función render() importada
+const { Content } = await render(entry);
 ---
 
 <Layout title={entry.data.title}>
