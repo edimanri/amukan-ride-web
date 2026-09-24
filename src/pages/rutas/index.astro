@@ -1,52 +1,27 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { Image } from 'astro:assets';
-
-const rutas = await getCollection('rutas');
 ---
 
-<Layout title="Catálogo de Rutas - Amukan Ride">
-  <main class="max-w-6xl mx-auto px-4 py-12">
-    <h1 class="text-4xl font-bold text-center text-gray-50 mb-12">Catálogo de Rutas</h1>
-    
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {rutas.map((ruta) => {
-        const cleanSlug = ruta.id.replace(/\/?index(\.mdx?)?$/, '').replace(/\.mdx?$/, '');
-        return (
-          <article class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-teal-600 transition-colors">
-            <a href={`/rutas/${cleanSlug}`} class="block overflow-hidden h-48 bg-gray-900">
-              {ruta.data.coverImage ? (
-                <Image src={ruta.data.coverImage} alt={ruta.data.title} width={600} height={400} class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
-              ) : (
-                <div class="w-full h-full flex items-center justify-center hover:bg-gray-800 transition-colors">
-                  <span class="text-gray-400 text-sm">Sin imagen de portada</span>
-                </div>
-              )}
-            </a>
-            <div class="p-6">
-              <a href={`/rutas/${cleanSlug}`}>
-                <h2 class="text-xl font-bold text-gray-50 mb-2 hover:text-teal-500 transition-colors">
-                  {ruta.data.title}
-                </h2>
-              </a>
-              {ruta.data.description && (
-                <p class="text-gray-300 text-sm mb-4 line-clamp-3">
-                  {ruta.data.description}
-                </p>
-              )}
-              <div class="flex flex-wrap gap-2 text-xs font-medium mt-4">
-                {ruta.data.distance && (
-                  <span class="bg-gray-900 border border-gray-700 px-2 py-1 rounded text-gray-300">↔ {ruta.data.distance} km</span>
-                )}
-                {ruta.data.difficulty && (
-                  <span class="bg-yellow-500/10 text-yellow-500 border border-yellow-500/20 px-2 py-1 rounded">{ruta.data.difficulty}</span>
-                )}
-              </div>
-            </div>
-          </article>
-        );
-      })}
+<Layout title="Catálogo de Rutas">
+  <div class="max-w-6xl mx-auto py-20 px-4">
+    <header class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight">Catálogo de Rutas</h1>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <a href="#" class="bg-gray-800 border border-gray-700 hover:border-yellow-500 transition-colors rounded-2xl overflow-hidden block group">
+        <div class="h-48 bg-gray-900 flex items-center justify-center text-gray-600">
+          Sin imagen de portada
+        </div>
+        <div class="p-6">
+          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-500 transition-colors">San Cristobal Norte</h3>
+          <p class="text-sm text-gray-400 mb-4">Descripción de prueba</p>
+          <div class="flex gap-2 text-xs font-medium">
+            <span class="px-2 py-1 bg-gray-900 text-gray-300 rounded border border-gray-700">↔ 4.5 km</span>
+            <span class="px-2 py-1 bg-yellow-500/10 text-yellow-500 rounded border border-yellow-500/20">Intermedio</span>
+          </div>
+        </div>
+      </a>
     </div>
-  </main>
+  </div>
 </Layout>

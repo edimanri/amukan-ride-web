@@ -1,0 +1,77 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout title="Recursos y Descargas">
+  <div class="max-w-6xl mx-auto py-20 px-4">
+    <header class="text-center mb-16">
+      <span class="text-yellow-500 font-bold tracking-widest uppercase text-sm mb-4 px-4 py-1 rounded-full bg-yellow-500/10 border border-yellow-500/20">
+        Material Técnico
+      </span>
+      <h1 class="text-4xl md:text-5xl font-bold text-white mt-6 mb-6 tracking-tight">Recursos Gratuitos</h1>
+      <p class="text-xl text-gray-300 max-w-2xl mx-auto">
+        Guías, manuales y bases de datos diseñadas para optimizar tu rendimiento y seguridad en la ciudad.
+      </p>
+    </header>
+
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-8 max-w-5xl mx-auto">
+      
+      <!-- 1. Ebook 'Cero Fricción' -->
+      <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 flex flex-col items-start hover:border-yellow-500 transition-colors group">
+        <div class="w-12 h-12 bg-gray-900 text-yellow-500 rounded-xl flex items-center justify-center mb-6 border border-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253"></path></svg>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-3">Ebook 'Cero Fricción'</h3>
+        <p class="text-gray-400 mb-6 flex-grow">Fundamentos de Ciclismo Urbano. Aprende a navegar la ciudad con eficiencia y seguridad.</p>
+        <form action="https://cd61c58e.sibforms.com/serve/MUIFAD6pW9dg8aaWux4nsEbZT9AwSKoUJ2ovcoOElT-usviMabHSAVtSqHbG5YdqyUYk8pwSeGguMVTV90Ox0kS1f3ZZBjRc9KdZS9MGReTt3Gmtm6utIo-jlDE5zT1H1nGzrRz9TEVLuxni2YulL4PtU6WIIm0UttOgfaT2QIPa0aNJrqIrMJHHskUUNXOrq9tODV6AOr_ZtVMjNg==" method="POST" class="w-full mt-auto flex flex-col gap-3">
+          <input type="hidden" name="RECURSO" value="Ebook_Cero_Friccion">
+          <input type="email" name="EMAIL" placeholder="tu@correo.com" required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500 transition-colors"/>
+          <button type="submit" class="w-full px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold rounded-lg transition-colors shadow-[0_0_10px_rgba(234,179,8,0.3)]">Obtener Ebook</button>
+        </form>
+      </div>
+
+      <!-- 2. CheckList Bicicleta Usada -->
+      <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 flex flex-col items-start hover:border-yellow-500 transition-colors group">
+        <div class="w-12 h-12 bg-gray-900 text-yellow-500 rounded-xl flex items-center justify-center mb-6 border border-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4"></path></svg>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-3">Checklist Compra Usada</h3>
+        <p class="text-gray-400 mb-6 flex-grow">Inspección mecánica paso a paso para evaluar el estado real de una bicicleta de segunda mano.</p>
+        <form action="https://cd61c58e.sibforms.com/serve/MUIFAD5S4E3AFFTqpnA4QLWhaoM4ubpxwkoOAQSFY1sxwqZUxPrtubdtjNgn1HYWQ7JGZJe2lMvXLqv9OgSmufmQ0DFe6O0dkh3lbreA08E1xwdYcmOgCrgsAFYmYkgFO6t_e9aQ-8d_lbRu1TNiCLf11dtCZ_IQG_zqd3Z2SPuJtgCphzLNs-95uaufdq8AQHcjBCmF9IIK3tk5ew==" method="POST" class="w-full mt-auto flex flex-col gap-3">
+          <input type="hidden" name="RECURSO" value="Checklist_Usada">
+          <input type="email" name="EMAIL" placeholder="tu@correo.com" required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500 transition-colors"/>
+          <button type="submit" class="w-full px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold rounded-lg transition-colors shadow-[0_0_10px_rgba(234,179,8,0.3)]">Descargar Checklist</button>
+        </form>
+      </div>
+
+      <!-- 3. Base de Datos Tiendas -->
+      <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 flex flex-col items-start hover:border-yellow-500 transition-colors group">
+        <div class="w-12 h-12 bg-gray-900 text-yellow-500 rounded-xl flex items-center justify-center mb-6 border border-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 002-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-3">Base de Datos Tiendas</h3>
+        <p class="text-gray-400 mb-6 flex-grow">Directorio nacional de talleres y tiendas especializadas de ciclismo en Chile.</p>
+        <form action="https://cd61c58e.sibforms.com/serve/MUIFAEVZtinj7N_e0ZOi6G5nqehMgoc-TpAKDGRXfwRoiGfBlmh0kQSNn3x7uym3HsoB97LxzN2g22_uVkRNi17ICAXx8ZlNRtqZUnKL0ZIEc2kARyIiRKj97JdETO4wyUb2SdThRsNnqDgBAoA_yauvjnUDaeBh-dF677yb8Bz3Mpdq80J_aWJlgtgulP-COqWh9T9UF0dML9B6ew==" method="POST" class="w-full mt-auto flex flex-col gap-3">
+          <input type="hidden" name="RECURSO" value="BBDD_Tiendas">
+          <input type="email" name="EMAIL" placeholder="tu@correo.com" required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500 transition-colors"/>
+          <button type="submit" class="w-full px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold rounded-lg transition-colors shadow-[0_0_10px_rgba(234,179,8,0.3)]">Acceder a Directorio</button>
+        </form>
+      </div>
+
+      <!-- 4. Evaluación Mercado -->
+      <div class="bg-gray-800 border border-gray-700 rounded-2xl p-8 flex flex-col items-start hover:border-yellow-500 transition-colors group">
+        <div class="w-12 h-12 bg-gray-900 text-yellow-500 rounded-xl flex items-center justify-center mb-6 border border-gray-700">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path></svg>
+        </div>
+        <h3 class="text-2xl font-bold text-white mb-3">Evaluación de Mercado</h3>
+        <p class="text-gray-400 mb-6 flex-grow">Análisis técnico de modelos y marcas de bicicletas disponibles en el mercado chileno.</p>
+        <form action="https://cd61c58e.sibforms.com/serve/MUIFAHACpBxqKD6XjnaJlKwMDR-IF8j-xd2PWFk13pE0AI7gVaEXQ2gO1Rl9dRz3jVmHkL93nQKBFDvwNAjUE_iFXkMpkn2DugnWQuBKJ91_KQM15___gzysZQ5nTTTLSaRA7q1PyOLxbCfgFDtY5r-O14rgWao4_JnQ5CoA0hi6HnacG5v7FWTSErZYfN5XEqR8X-4mdL3yXBiJjQ==" method="POST" class="w-full mt-auto flex flex-col gap-3">
+          <input type="hidden" name="RECURSO" value="Evaluacion_Mercado">
+          <input type="email" name="EMAIL" placeholder="tu@correo.com" required class="w-full bg-gray-900 border border-gray-700 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-yellow-500 transition-colors"/>
+          <button type="submit" class="w-full px-6 py-3 bg-yellow-500 hover:bg-yellow-400 text-gray-900 font-bold rounded-lg transition-colors shadow-[0_0_10px_rgba(234,179,8,0.3)]">Ver Informe</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</Layout>

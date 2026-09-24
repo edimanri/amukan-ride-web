@@ -1,49 +1,24 @@
 ---
-import { getCollection } from 'astro:content';
 import Layout from '../../layouts/Layout.astro';
-import { Image } from 'astro:assets';
-
-const posts = await getCollection('blog');
 ---
 
-<Layout title="Blog - Amukan Ride">
-  <main class="max-w-6xl mx-auto px-4 py-12">
-    <h1 class="text-4xl font-bold text-center text-gray-50 mb-12">Bitácora Técnica</h1>
-    
+<Layout title="Blog y Artículos">
+  <div class="max-w-6xl mx-auto py-20 px-4">
+    <header class="text-center mb-16">
+      <h1 class="text-4xl md:text-5xl font-bold text-white tracking-tight">Blog Técnico</h1>
+    </header>
+
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-      {posts.map((post) => {
-        const cleanSlug = post.id.replace(/\/?index(\.mdx?)?$/, '').replace(/\.mdx?$/, '');
-        return (
-          <article class="bg-gray-800 rounded-lg overflow-hidden border border-gray-700 hover:border-teal-600 transition-colors">
-            <a href={`/blog/${cleanSlug}`} class="block overflow-hidden h-48 bg-gray-900">
-              {post.data.coverImage ? (
-                <Image src={post.data.coverImage} alt={post.data.title} width={600} height={400} class="w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
-              ) : (
-                <div class="w-full h-full flex items-center justify-center hover:bg-gray-800 transition-colors">
-                  <span class="text-gray-400 text-sm">Sin imagen de portada</span>
-                </div>
-              )}
-            </a>
-            <div class="p-6">
-              <a href={`/blog/${cleanSlug}`}>
-                <h2 class="text-xl font-bold text-gray-50 mb-2 hover:text-teal-500 transition-colors">
-                  {post.data.title}
-                </h2>
-              </a>
-              {post.data.description && (
-                <p class="text-gray-300 text-sm mb-4 line-clamp-3">
-                  {post.data.description}
-                </p>
-              )}
-              {post.data.pubDate && (
-                <time class="text-xs text-gray-400">
-                  {new Date(post.data.pubDate).toLocaleDateString('es-CL')}
-                </time>
-              )}
-            </div>
-          </article>
-        );
-      })}
+      <a href="#" class="bg-gray-800 border border-gray-700 hover:border-yellow-500 transition-colors rounded-2xl overflow-hidden block group">
+        <div class="h-48 bg-gray-900 flex items-center justify-center text-gray-600">
+          Próximamente
+        </div>
+        <div class="p-6">
+          <span class="text-xs font-bold text-yellow-500 uppercase tracking-wider mb-2 block">Mecánica</span>
+          <h3 class="text-xl font-bold text-white mb-2 group-hover:text-yellow-500 transition-colors">Artículo en desarrollo</h3>
+          <p class="text-sm text-gray-400">Contenido técnico de ingeniería aplicada al ciclismo.</p>
+        </div>
+      </a>
     </div>
-  </main>
+  </div>
 </Layout>
