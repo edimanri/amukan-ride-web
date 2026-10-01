@@ -1,8 +1,7 @@
 import { z, defineCollection } from 'astro:content';
-import { glob } from 'astro/loaders'; // <-- Asegúrate de importar glob
+import { glob } from 'astro/loaders';
 
 const blog = defineCollection({
-  // Agregamos el loader para decirle a Astro dónde están los archivos
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/blog" }), 
   schema: ({ image }) => z.object({
     title: z.string(),
@@ -13,7 +12,6 @@ const blog = defineCollection({
 });
 
 const rutas = defineCollection({
-  // Hacemos lo mismo para rutas
   loader: glob({ pattern: "**/*.{md,mdx}", base: "./src/content/rutas" }),
   schema: ({ image }) => z.object({
     title: z.string(),
@@ -22,9 +20,12 @@ const rutas = defineCollection({
     googleEarthLink: z.string().url().optional(),
     gpxFile: z.string().optional(),
     description: z.string().optional(),
-    distance: z.number().optional(),
-    elevation: z.number().optional(),
+    distance: z.string().optional(),
+    elevation: z.string().optional(),
     difficulty: z.string().optional(),
+    terrain: z.string().optional(),
+    youtubeId: z.string().optional(),
+    mapIframe: z.string().optional(),
   })
 });
 
