@@ -1,17 +1,11 @@
 import { defineConfig } from 'astro/config';
-import tailwind from '@astrojs/tailwind';
-import react from '@astrojs/react';
-import mdx from '@astrojs/mdx';
-import vercel from '@astrojs/vercel';
+import sitemap from '@astrojs/sitemap';
+// ... (aquí pueden estar tus otros imports como tailwind o react)
 
 export default defineConfig({
-  output: 'server',
-  adapter: vercel(),
+  site: 'https://www.ciclismourbano.cl', // Usa exactamente el formato con el que verificaste en GSC
   integrations: [
-    tailwind({
-      applyBaseStyles: false,
-    }),
-    react(),
-    mdx(),
+    // ... (tus otras integraciones)
+    sitemap()
   ],
 });
