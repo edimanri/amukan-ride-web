@@ -30,18 +30,18 @@ export default function ContactForm() {
   // Renderizado del formulario base
   return (
     <form onSubmit={handleSubmit} className="bg-gray-800/40 border border-gray-700 p-8 rounded-2xl text-left max-w-xl mx-auto shadow-xl">
-      <div className="mb-4">
-        <label htmlFor="name" className="block text-sm font-medium text-gray-300 mb-1">Nombre y Cargo</label>
-        <input type="text" id="name" required className="w-full bg-gray-900 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors" placeholder="Ej. Juan Pérez - Gerente de RRHH" />
-      </div>
-      <div className="mb-4">
-        <label htmlFor="email" className="block text-sm font-medium text-gray-300 mb-1">Correo Corporativo</label>
-        <input type="email" id="email" required className="w-full bg-gray-900 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors" placeholder="juan@empresa.com" />
-      </div>
-      <div className="mb-6">
+    <div className="mb-6">
         <label htmlFor="message" className="block text-sm font-medium text-gray-300 mb-1">Requerimiento de Movilidad</label>
         <textarea id="message" required rows="4" className="w-full bg-gray-900 border border-gray-600 rounded-lg px-4 py-3 text-white focus:outline-none focus:border-cyan-500 focus:ring-1 focus:ring-cyan-500 transition-colors" placeholder="Detalles de la clínica, proyecto de infraestructura o consultoría..."></textarea>
       </div>
+      
+      <div className="mb-6 flex items-start">
+        <input type="checkbox" id="privacy" required className="mt-1 mr-3 h-4 w-4 rounded border-gray-600 bg-gray-900 text-cyan-500 focus:ring-cyan-500 focus:ring-offset-gray-800" />
+        <label htmlFor="privacy" className="text-xs text-gray-400">
+          He leído y acepto los <a href="/terminos" className="text-cyan-400 hover:underline" target="_blank">Términos de Servicio</a> y la <a href="/privacidad" className="text-cyan-400 hover:underline" target="_blank">Política de Privacidad</a> de Amukan Ride SpA.
+        </label>
+      </div>
+
       <button type="submit" disabled={status === 'submitting'} className="w-full bg-cyan-600 hover:bg-cyan-500 text-white font-bold py-4 rounded-xl transition-all duration-300 shadow-[0_0_15px_rgba(8,145,178,0.4)] disabled:opacity-70 disabled:cursor-not-allowed">
         {status === 'submitting' ? 'Procesando...' : 'Enviar Solicitud'}
       </button>
